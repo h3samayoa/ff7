@@ -13,8 +13,6 @@ matched_enemies = list(filter(lambda v: match("^href", v), div_enemies))
 reg_patterns = ['"', '^href=', r'/.+?\bFile\b.*']
 comb_pats = r'|'.join(map(r'(?:{})'.format, reg_patterns))
 
-
-
 def filt_enemies(x):
     for val in x:
         final_enemies.append(sub(comb_pats, '', val))
