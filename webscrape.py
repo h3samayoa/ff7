@@ -1,10 +1,16 @@
 from bs4 import BeautifulSoup
 import requests 
 from re import match, sub 
+import configparser 
+import os 
 
 final_enemies = []
 
-soup = BeautifulSoup(requests.get("https://finalfantasy.fandom.com/wiki/Final_Fantasy_VII_enemies").content, "html.parser")
+parser = configparser.ConfigParser()
+parser.read('config.ini')
+config_url = parser['wiki']['url']
+
+soup = BeautifulSoup(requests.get(f'{config_url}/wiki/Final_Fantasy_VII_enemies').content, "html.parser")
 
 div_enemies = str(soup.find_all("div", id="gallery-0")).split()  
 
