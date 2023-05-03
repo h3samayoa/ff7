@@ -6,11 +6,20 @@ import os
 
 final_enemies = []
 
-parser = configparser.ConfigParser()
-parser.read('config.ini')
-config_url = parser['wiki']['url']
+parser = configparser.ConfigParser(os.environ)
 
-soup = BeautifulSoup(requests.get(f'{config_url}/wiki/Final_Fantasy_VII_enemies').content, "html.parser")
+parser["DEFAULTS"] = {
+        "url": "https://finalfantasy.fandom.com"
+    }
+
+parser.read('configs/config.ini')
+
+for key, value in parser["DEFAULTS"].items():
+    env_var = os.environ.get(key)
+    if env_var:
+        parser["DEFAULTS"][key] = env_var 
+
+soup = BeautifulSoup(requests.get(f'{parser["DEFAULTS"]["url"]}/wiki/Final_Fantasy_VII_enemies').content, "html.parser")
 
 div_enemies = str(soup.find_all("div", id="gallery-0")).split()  
 
