@@ -44,5 +44,5 @@ enemy_data()
 
 # filter png files out maybe into seperate array 
 # visit each link in array and grab important data (need to decide what data is important)
-#put important data into dictionary based off name/id 
+# put important data into dictionary based off name/id 
 
