@@ -21,12 +21,16 @@ for key, value in parser["DEFAULTS"].items():
 
 soup = BeautifulSoup(requests.get(f'{parser["DEFAULTS"]["url"]}/wiki/Final_Fantasy_VII_enemies').content, "html.parser")
 
-div_enemies = str(soup.find_all("div", id="gallery-0")).split()  
-
-matched_enemies = list(filter(lambda v: match("^href", v), div_enemies))
-
 reg_patterns = ['"', '^href=', r'/.+?\bFile\b.*']
 comb_pats = r'|'.join(map(r'(?:{})'.format, reg_patterns))
+
+def enemy_data():
+    for i in range(27):
+        div_enemies = str(soup.find_all("div", id=f'gallery-{i}')).split()
+        matched_enemies = list(filter(lambda v: match("^href", v), div_enemies))
+        filt_enemies(matched_enemies)   
+        print(matched_enemies)
+
 
 def filt_enemies(x):
     for val in x:
@@ -36,5 +40,9 @@ def filt_enemies(x):
         else:
             final_enemies.pop(-1)
 
-filt_enemies(matched_enemies)
-print(final_enemies)
+enemy_data()
+
+# filter png files out maybe into seperate array 
+# visit each link in array and grab important data (need to decide what data is important)
+#put important data into dictionary based off name/id 
+
