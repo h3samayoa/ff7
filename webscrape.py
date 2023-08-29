@@ -25,11 +25,11 @@ reg_patterns = ['"', '^href=', r'/.+?\bFile\b.*']
 comb_pats = r'|'.join(map(r'(?:{})'.format, reg_patterns))
 
 def enemy_data():
-    for i in range(27):
+    for i in range(1):
         div_enemies = str(soup.find_all("div", id=f'gallery-{i}')).split()
         matched_enemies = list(filter(lambda v: match("^href", v), div_enemies))
         filt_enemies(matched_enemies)   
-        print(matched_enemies)
+        print(final_enemies)
 
 
 def filt_enemies(x):
